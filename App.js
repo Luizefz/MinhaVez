@@ -1,20 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import {
+  useFonts,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
+import HomeScreen from './screens/Home';
+import PlacarScreen from './screens/Placar';
+
 
 export default function App() {
+
+  const Stack = createStackNavigator();
+
+  const fonts = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+  });
+
+  if (!fonts) {
+    return <AppLoading />;
+  }
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <NavigationContainer>
+
+      <Stack.Navigator
+        screenOptions={{
+          gestureEnabled: false,
+          ...TransitionPresets.DefaultTransition,
+        }}>
+        <Stack.Screen options={{ headerShown: false}} name="Minha Vez" component={HomeScreen} />
+        <Stack.Screen options={{ headerTitleAlign: 'center', title: 'Placar', headerTransparent: true, headerShadowVisible: false }} name="Placar" component={PlacarScreen} />
+      </Stack.Navigator>
+
       <StatusBar style="auto" />
-    </View>
+
+    </NavigationContainer>
+
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = StyleSheet.create({});
