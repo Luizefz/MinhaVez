@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { Component } from 'react'
 
 export default class Placar extends Component {
@@ -6,19 +6,40 @@ export default class Placar extends Component {
         return (
             <View style={styles.container}>
 
-                <TouchableOpacity style={styles.counterOrange}>
+                <View style={styles.placarCounter}>
 
-                    <Text style={styles.counterNumber} >01</Text>
+                    <TouchableOpacity style={styles.counterOrange} onPress={() => { }}>
 
-                </TouchableOpacity>
+                        <Text style={styles.counterNumber} >01</Text>
 
-                <Text style={styles.counterVS}>VS</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.counterGreen}>
+                    <Text style={styles.counterVS}>VS</Text>
 
-                    <Text style={styles.counterNumber}>05</Text>
+                    <TouchableOpacity style={styles.counterGreen} onPress={() => { }}>
 
-                </TouchableOpacity>
+                        <Text style={styles.counterNumber}>05</Text>
+
+                    </TouchableOpacity>
+
+                </View>
+
+                <View style={styles.placarEdit}>
+
+                    <TouchableOpacity onPress={() => { }}>
+
+                        <Image style={styles.headerButton} source={require('../assets/edit-2.png')}></Image>
+
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => { }}>
+                        <Image style={styles.headerButton} source={require('../assets/refresh-2.png')}></Image>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => { }}>
+                        <Image style={styles.headerButton} source={require('../assets/edit-2.png')}></Image>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -27,34 +48,47 @@ export default class Placar extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    placarCounter: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: '8%'
     },
     counterOrange: {
         width: '38%',
+        height: 160,
         backgroundColor: '#E0A400',
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center'
     },
-    counterVS:{
+    counterVS: {
         fontFamily: 'Poppins_600SemiBold',
         fontSize: 20,
         color: '#ffff'
     },
     counterNumber: {
+        width: 130,
+        height: 130,
+        textAlign: 'center',
         fontFamily: 'Poppins_600SemiBold',
         fontSize: 80,
         color: '#FFFFFF',
-        top: 12
     },
     counterGreen: {
         width: '38%',
+        height: 160,
         backgroundColor: '#27D999',
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center'
     },
+    placarEdit: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        marginTop: '5%'
+    }
 
 })

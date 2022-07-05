@@ -44,7 +44,7 @@ export default function App() {
         <Stack.Screen options={{ headerTitleAlign: 'center', title: 'Placar', headerTransparent: true, headerShadowVisible: false }} name="Placar" component={PlacarScreen} />
       </Stack.Navigator>
 
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
 
     </NavigationContainer>
 
