@@ -1,48 +1,60 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { Component } from 'react'
+import { SlideInDown, SlideOutUp } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
+import React, { useState } from 'react'
 
-export default class Placar extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
+export default function Placar() {
 
-                <View style={styles.placarCounter}>
+    const [counterTeamOrange, setconterTeamOrange] = useState(0);
+    const [counterTeamGreen, setconterTeamGreen] = useState(0);
 
-                    <TouchableOpacity style={styles.counterOrange} onPress={() => { }}>
+    return (
+        <View style={styles.container}>
 
-                        <Text style={styles.counterNumber} >01</Text>
+            <View style={styles.placarCounter}>
 
-                    </TouchableOpacity>
+                <TouchableOpacity style={styles.counterOrange} onPress={() => { setconterTeamOrange(counterTeamOrange + 1) }}>
 
-                    <Text style={styles.counterVS}>VS</Text>
+                    <Animated.Text
+                        style={styles.counterNumber}
+                        key={counterTeamOrange}
+                        entering={SlideInDown}
+                        exiting={SlideOutUp}>{counterTeamOrange}</Animated.Text>
 
-                    <TouchableOpacity style={styles.counterGreen} onPress={() => { }}>
+                </TouchableOpacity>
 
-                        <Text style={styles.counterNumber}>05</Text>
+                <Text style={styles.counterVS}>VS</Text>
 
-                    </TouchableOpacity>
+                <TouchableOpacity style={styles.counterGreen} onPress={() => { setconterTeamGreen(counterTeamGreen + 1) }}>
 
-                </View>
+                    <Animated.Text
+                        style={styles.counterNumber}
+                        key={counterTeamGreen}
+                        entering={SlideInDown}
+                        exiting={SlideOutUp}>{counterTeamGreen}</Animated.Text>
 
-                <View style={styles.placarEdit}>
+                </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => { }}>
-
-                        <Image style={styles.headerButton} source={require('../assets/edit-2.png')}></Image>
-
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => { }}>
-                        <Image style={styles.headerButton} source={require('../assets/refresh-2.png')}></Image>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => { }}>
-                        <Image style={styles.headerButton} source={require('../assets/edit-2.png')}></Image>
-                    </TouchableOpacity>
-                </View>
             </View>
-        )
-    }
+
+            <View style={styles.placarEdit}>
+
+                <TouchableOpacity onPress={() => { }}>
+
+                    <Image style={styles.headerButton} source={require('../assets/edit-2.png')}></Image>
+
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => { }}>
+                    <Image style={styles.headerButton} source={require('../assets/refresh-2.png')}></Image>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => { }}>
+                    <Image style={styles.headerButton} source={require('../assets/edit-2.png')}></Image>
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({

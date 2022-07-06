@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import Placar from '../components/Placar';
@@ -10,6 +10,8 @@ import Jogos from '../components/Jogos';
 const Home = () => {
 
     const navigation = useNavigation();
+    const [counterTeamOrange, setconterTeamOrange] = useState(1);
+    const [counterTeamGreen, setconterTeamGreen] = useState();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -17,7 +19,7 @@ const Home = () => {
                 <View>
                     
                     <Header />
-                    <Placar />
+                    <Placar counterOrange={counterTeamOrange} counterGreen={counterTeamGreen}/>
                     <Jogos />
 
                 </View>

@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { Component } from 'react'
 
-export default class Header extends Component {
-    render() {
+export default function Header () {
+
         return (
             <View style={styles.header}>
                 <Text style={styles.headerText}>Minha Vez!</Text>
@@ -21,7 +21,6 @@ export default class Header extends Component {
             </View>
         )
     }
-}
 
 const styles = StyleSheet.create({
     header: {
