@@ -1,5 +1,15 @@
 import { Keyboard, StyleSheet, Text, TouchableOpacity, View, Image, TextInput, ScrollView, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
-import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
+import Animated, {
+    FadeInDown, FadeOutUp,
+    useSharedValue,
+    withSpring,
+    useAnimatedStyle,
+    useAnimatedGestureHandler,
+    runOnJS,
+    FadeIn,
+    FadeOut
+} from 'react-native-reanimated';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 import Toast from 'react-native-simple-toast';
 import Modal from "react-native-modal";
 import React, { useState, useRef } from 'react'
@@ -8,6 +18,7 @@ export default function Placar() {
 
     const [counterTeamOrange, setconterTeamOrange] = useState(0);
     const [counterTeamGreen, setconterTeamGreen] = useState(0);
+
     const [isModalVisible01, setModalVisible01] = useState(false);
     const [isModalVisible02, setModalVisible02] = useState(false);
     const inputRef = useRef();
@@ -17,39 +28,115 @@ export default function Placar() {
         setconterTeamOrange(0)
     }
 
+    const yOrange = useSharedValue(0);
+    const yGreen = useSharedValue(0);
+
+    const animationCountOrange = useAnimatedGestureHandler({
+        onStart: (_, cty) => {
+            cty.startY = yOrange.value;
+        },
+        onActive: (event, cty) => {
+            yOrange.value = cty.startY + event.translationY;
+        },
+        onEnd: (_) => {
+            yOrange.value = withSpring(0);
+
+        },
+        onFinish: (_) => {
+            if (yOrange.value < 0) {
+                runOnJS(setconterTeamOrange)(counterTeamOrange + 1);
+            };
+            if (yOrange.value > 0) {
+                runOnJS(setconterTeamOrange)(counterTeamOrange - 1);
+            };
+        }
+    });
+
+    const animationCountGreen = useAnimatedGestureHandler({
+        onStart: (_, cty) => {
+            cty.startY = yGreen.value;
+        },
+        onActive: (event, cty) => {
+            yGreen.value = cty.startY + event.translationY;
+        },
+        onEnd: (_) => {
+            yGreen.value = withSpring(0);
+
+        },
+        onFinish: (_) => {
+            if (yGreen.value < 0) {
+                runOnJS(setconterTeamGreen)(counterTeamGreen + 1);
+            };
+            if (yGreen.value > 0) {
+                runOnJS(setconterTeamGreen)(counterTeamGreen - 1);
+            };
+        }
+    });
+    const animatedOrange = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    translateY: yOrange.value,
+                },
+            ],
+        };
+    });
+
+    const animatedGreen = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    translateY: yGreen.value,
+                },
+            ],
+        };
+    });
+
+
+
     return (
         <View style={styles.container}>
 
             <View style={styles.placarCounter}>
 
-                <TouchableOpacity style={styles.counterOrange} onPress={() => { setconterTeamOrange(counterTeamOrange + 1) }}>
+                <View style={styles.counterOrange}>
+                    <PanGestureHandler onGestureEvent={animationCountOrange}>
 
-                    <Animated.Text
-                        style={styles.counterNumber}
-                        key={counterTeamOrange}
-                        entering={FadeInDown.duration(200)}
-                        exiting={FadeOutUp.duration(80)}>{counterTeamOrange}</Animated.Text>
+                        <Animated.Text
+                            style={[styles.counterNumber, animatedOrange]}
+                            key={counterTeamOrange}
+                            entering={FadeIn.duration(200)}
+                            exiting={FadeOut.duration(80)}
+                        >
+                            {counterTeamOrange}
+                        </Animated.Text>
 
-                </TouchableOpacity>
+                    </PanGestureHandler>
+                </View>
 
                 <Text style={styles.counterVS}>VS</Text>
 
-                <TouchableOpacity style={styles.counterGreen} onPress={() => { setconterTeamGreen(counterTeamGreen + 1) }}>
+                <View style={styles.counterGreen}>
+                    <PanGestureHandler onGestureEvent={animationCountGreen}>
 
-                    <Animated.Text
-                        style={styles.counterNumber}
-                        key={counterTeamGreen}
-                        entering={FadeInDown.duration(200)}
-                        exiting={FadeOutUp.duration(80)}>{counterTeamGreen}</Animated.Text>
+                        <Animated.Text
+                            style={[styles.counterNumber, animatedGreen]}
+                            key={counterTeamGreen}
+                            entering={FadeIn.duration(200)}
+                            exiting={FadeOut.duration(80)}
+                        >
+                            {counterTeamGreen}
+                        </Animated.Text>
 
-                </TouchableOpacity>
+                    </PanGestureHandler>
+                </View>
 
             </View>
 
             <View style={styles.placarEdit}>
 
                 <TouchableOpacity
-                    onPress={() => { setModalVisible01(true) }}>
+                    onPress={() => { }}>
                     <Image style={styles.headerButton} source={require('../assets/edit-2.png')} />
 
                 </TouchableOpacity>
@@ -63,13 +150,13 @@ export default function Placar() {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => { setModalVisible02(true) }}>
+                    onPress={() => { }}>
                     <Image style={styles.headerButton} source={require('../assets/edit-2.png')} />
 
                 </TouchableOpacity>
             </View>
 
-            <Modal
+            {/* <Modal
                 style={styles.modalContainer}
                 isVisible={isModalVisible01}
                 deviceWidth={Dimensions.get("window").width}
@@ -82,12 +169,12 @@ export default function Placar() {
                             <TextInput
                                 style={styles.placarInput01}
                                 keyboardType={'number-pad'}
-                                placeholder={counterTeamOrange}
-                                // onChangeText={setconterTeamOrange}
+                                // placeholder={counterTeamOrange}
+                                onChangeText={() => {}}
                                 ref={inputRef}
                                 caretHidden={true}
                                 maxLength={2}
-                                onSubmitEditing={() => setModalVisible01(false)}>
+                                onSubmitEditing={() => {setModalVisible01(false)}}>
                             </TextInput>
                         </View>
                     </ScrollView>
@@ -107,8 +194,8 @@ export default function Placar() {
                             <TextInput
                                 style={styles.placarInput02}
                                 keyboardType='numeric'
-                                onChangeText={setconterTeamGreen}
-                                // placeholder={counterTeamGreen}
+                                onChangeText={() => {}}
+                                numeric value  
                                 ref={inputRef}
                                 caretHidden={true}
                                 maxLength={2}
@@ -117,7 +204,7 @@ export default function Placar() {
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
-            </Modal>
+            </Modal> */}
         </View>
     )
 }
