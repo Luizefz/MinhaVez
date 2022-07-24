@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, TextInput, ScrollView, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, SafeAreaView } from 'react-native'
-import Animated, { FadeInDown, FadeOutUp, SlideInDown } from 'react-native-reanimated';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native'
+import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
 import Toast from 'react-native-simple-toast';
 import TouchableSwipe from 'react-native-touchable-swipe'
 import Modal from "react-native-modal";
@@ -51,6 +51,7 @@ export default function Placar() {
         }
 
     }
+
 
 
     return (
@@ -169,16 +170,21 @@ export default function Placar() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        height: '100%'
+        // alignSelf: 'center',
     },
     placarCounter: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        marginTop: '8%'
+        // height: '100%'
+        // marginTop: '8%'
     },
     counterOrange: {
-        width: '38%',
-        height: 160,
+        maxWidth: '100%',
+        minWidth: '38%',
+        maxHeight: 300,
+        minHeight: 160,
         backgroundColor: '#E0A400',
         borderRadius: 8,
         alignItems: 'center',
@@ -205,6 +211,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    if (orientationIsLandscape) {
+        
+    },
     placarEdit: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
@@ -222,13 +231,13 @@ const styles = StyleSheet.create({
     },
     modalCard: {
         alignItems: 'center',
-        backgroundColor: '#5B5B5B',
-        borderRadius: 8,
+        backgroundColor: '#454545',
+        borderRadius: 14,
         height: '45%'
     },
     modalCardText: {
         textAlign: 'center',
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Poppins_600SemiBold',
         fontSize: 28,
         color: '#FFFFFF',
         padding: '5%'
@@ -242,7 +251,7 @@ const styles = StyleSheet.create({
         width: 110,
         height: 110,
         marginHorizontal: 15,
-        backgroundColor: '#D1D1D1',
+        backgroundColor: '#858585',
         borderRadius: 100,
     },
     modalCardButtonText: {

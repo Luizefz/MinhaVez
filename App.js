@@ -12,7 +12,6 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 import HomeScreen from './screens/Home';
-import PlacarScreen from './screens/Placar';
 
 
 export default function App() {
@@ -41,7 +40,6 @@ export default function App() {
           ...TransitionPresets.DefaultTransition,
         }}>
         <Stack.Screen options={{ headerShown: false}} name="Minha Vez" component={HomeScreen} />
-        <Stack.Screen options={{ headerTitleAlign: 'center', title: 'Placar', headerTransparent: true, headerShadowVisible: false }} name="Placar" component={PlacarScreen} />
       </Stack.Navigator>
 
       <StatusBar style="light" />

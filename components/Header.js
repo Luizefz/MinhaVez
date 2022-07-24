@@ -1,26 +1,53 @@
 import { ScrollView, StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
-export default function Header () {
+export default function Header() {
 
-        return (
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Minha Vez!</Text>
+    const navigation = useNavigation();
 
-                <View style={styles.headerButtons}>
+    const [orientationIsLandscape,setOrientation]=useState(true)
+    const [buttonMaxMin, setButtonMaxMin] = useState()
+    const maximizeImg = '../assets/maximize-2.png'
+    const minimizeImg = '../assets/minimize-2.png'
 
-                    <TouchableOpacity onPress={() => { }}>
-                        <Image style={styles.headerButton} source={require('../assets/maximize-2.png')}></Image>
-                    </TouchableOpacity>
+    const toggleOrientation = () => {
+        setOrientation(!orientationIsLandscape)
+        changeScreenOrientation()
+      }
 
-                    <TouchableOpacity onPress={() => { }}>
-                        <Image source={require('../assets/settings1.png')}></Image>
-                    </TouchableOpacity>
+    async function changeScreenOrientation() {
 
-                </View>
-            </View>
-        )
+        if( orientationIsLandscape == true ){
+            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+            setButtonMaxMin(maximizeImg)
+            
+        }
+        if( orientationIsLandscape == false ){
+            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+            setButtonMaxMin(minimizeImg)
+        }
     }
+
+    return (
+        <View style={styles.header}>
+            <Text style={styles.headerText}>Minha Vez!</Text>
+
+            <View style={styles.headerButtons}>
+
+                <TouchableOpacity onPress={() => { toggleOrientation() }}>
+                    <Image style={styles.headerButton} source={require(minimizeImg)}></Image>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => { }}>
+                    <Image source={require('../assets/settings1.png')}></Image>
+                </TouchableOpacity>
+
+            </View>
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     header: {
