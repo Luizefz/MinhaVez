@@ -12,6 +12,7 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 import HomeScreen from './screens/Home';
+import PlacarFullScreen from './screens/PlacarFullScreen';
 
 
 export default function App() {
@@ -32,20 +33,20 @@ export default function App() {
 
 
   return (
-    <NavigationContainer>
+      <NavigationContainer>
 
-      <Stack.Navigator
-        screenOptions={{
-          gestureEnabled: false,
-          ...TransitionPresets.DefaultTransition,
-        }}>
-        <Stack.Screen options={{ headerShown: false}} name="Minha Vez" component={HomeScreen} />
-      </Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            gestureEnabled: false,
+            ...TransitionPresets.DefaultTransition,
+          }}>
+          <Stack.Screen options={{ headerShown: false }} name="Minha Vez" component={HomeScreen} />
+          <Stack.Screen options={{ headerShown: false }} name="placarFullScreen" component={PlacarFullScreen} />
+        </Stack.Navigator>
 
-      <StatusBar style="light" />
+        <StatusBar style="light" />
 
-    </NavigationContainer>
-
+      </NavigationContainer>
   );
 }
 

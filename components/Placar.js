@@ -3,32 +3,34 @@ import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
 import Toast from 'react-native-simple-toast';
 import TouchableSwipe from 'react-native-touchable-swipe'
 import Modal from "react-native-modal";
+import { useAtom } from 'jotai';
+import { counterTeamGreen, counterTeamOrange } from './Counters/DataCounter';
 import React, { useState } from 'react'
 
 export default function Placar() {
 
-    const [counterTeamOrange, setconterTeamOrange] = useState(0);
-    const [counterTeamGreen, setconterTeamGreen] = useState(0);
+    const [TeamOrangeCounter, setTeamOrangeCounter] = useAtom(counterTeamOrange);
+    const [TeamGreenCounter, setTeamGreenCounter] = useAtom(counterTeamGreen);
 
     const [isModalVisible01, setModalVisible01] = useState(false);
     const [isModalVisible02, setModalVisible02] = useState(false);
 
     function clearPlacar() {
-        setconterTeamGreen(0)
-        setconterTeamOrange(0)
+        setTeamGreenCounter(0)
+        setTeamOrangeCounter(0)
     }
 
     function addToCounterOrange(swipe) {
 
         switch (swipe) {
             case 'Up':
-                if (counterTeamOrange < 99) {
-                    setconterTeamOrange(counterTeamOrange + 1)
+                if (TeamOrangeCounter < 99) {
+                    setTeamOrangeCounter(TeamOrangeCounter + 1)
                 }
                 break;
             case 'Down':
-                if (counterTeamOrange >= 1) {
-                    setconterTeamOrange(counterTeamOrange - 1)
+                if (TeamOrangeCounter >= 1) {
+                    setTeamOrangeCounter(TeamOrangeCounter - 1)
                 }
                 break;
         }
@@ -39,13 +41,13 @@ export default function Placar() {
 
         switch (swipe) {
             case 'Up':
-                if (counterTeamGreen < 99) {
-                    setconterTeamGreen(counterTeamGreen + 1)
+                if (TeamGreenCounter < 99) {
+                    setTeamGreenCounter(TeamGreenCounter + 1)
                 }
                 break;
             case 'Down':
-                if (counterTeamGreen >= 1) {
-                    setconterTeamGreen(counterTeamGreen - 1)
+                if (TeamGreenCounter >= 1) {
+                    setTeamGreenCounter(TeamGreenCounter - 1)
                 }
                 break;
         }
@@ -67,9 +69,9 @@ export default function Placar() {
 
                     <Animated.Text
                         style={styles.counterNumber}
-                        key={counterTeamOrange}
+                        key={TeamOrangeCounter}
                         entering={FadeInDown.duration(150)}
-                        exiting={FadeOutUp.duration(80)}>{counterTeamOrange}
+                        exiting={FadeOutUp.duration(80)}>{TeamOrangeCounter}
                     </Animated.Text>
 
                 </TouchableSwipe>
@@ -84,9 +86,9 @@ export default function Placar() {
 
                     <Animated.Text
                         style={styles.counterNumber}
-                        key={counterTeamGreen}
+                        key={TeamGreenCounter}
                         entering={FadeInDown.duration(200)}
-                        exiting={FadeOutUp.duration(80)}>{counterTeamGreen}
+                        exiting={FadeOutUp.duration(80)}>{TeamGreenCounter}
                     </Animated.Text>
 
                 </TouchableSwipe>

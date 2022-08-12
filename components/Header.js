@@ -8,9 +8,6 @@ export default function Header() {
     const navigation = useNavigation();
 
     const [orientationIsLandscape,setOrientation]=useState(true)
-    const [buttonMaxMin, setButtonMaxMin] = useState()
-    const maximizeImg = '../assets/maximize-2.png'
-    const minimizeImg = '../assets/minimize-2.png'
 
     const toggleOrientation = () => {
         setOrientation(!orientationIsLandscape)
@@ -21,12 +18,10 @@ export default function Header() {
 
         if( orientationIsLandscape == true ){
             await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-            setButtonMaxMin(maximizeImg)
             
         }
         if( orientationIsLandscape == false ){
             await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-            setButtonMaxMin(minimizeImg)
         }
     }
 
@@ -36,8 +31,8 @@ export default function Header() {
 
             <View style={styles.headerButtons}>
 
-                <TouchableOpacity onPress={() => { toggleOrientation() }}>
-                    <Image style={styles.headerButton} source={require(minimizeImg)}></Image>
+                <TouchableOpacity onPress={() => { navigation.navigate('placarFullScreen') }}>
+                    <Image style={styles.headerButton} source={require('../assets/maximize-2.png')}></Image>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => { }}>
@@ -56,7 +51,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: '5%',
         paddingTop: 70,
-        marginBottom: 10,
+        marginBottom: '8%',
     },
     headerText: {
         fontFamily: 'Poppins_600SemiBold',
@@ -65,8 +60,8 @@ const styles = StyleSheet.create({
         color: '#ffff'
     },
     headerButton: {
-        width: 30,
-        height: 30
+        width: 35,
+        height: 35
     },
     headerButtons: {
         flexDirection: 'row',
