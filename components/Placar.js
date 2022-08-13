@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Vibration, } from 'react-native'
 import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
 import Toast from 'react-native-simple-toast';
 import TouchableSwipe from 'react-native-touchable-swipe'
@@ -18,6 +18,7 @@ export default function Placar() {
     function clearPlacar() {
         setTeamGreenCounter(0)
         setTeamOrangeCounter(0)
+        Vibration.vibrate(50)
     }
 
     function addToCounterOrange(swipe) {
@@ -26,11 +27,13 @@ export default function Placar() {
             case 'Up':
                 if (TeamOrangeCounter < 99) {
                     setTeamOrangeCounter(TeamOrangeCounter + 1)
+                    Vibration.vibrate(50)
                 }
                 break;
             case 'Down':
                 if (TeamOrangeCounter >= 1) {
                     setTeamOrangeCounter(TeamOrangeCounter - 1)
+                    Vibration.vibrate(50)
                 }
                 break;
         }
@@ -43,11 +46,13 @@ export default function Placar() {
             case 'Up':
                 if (TeamGreenCounter < 99) {
                     setTeamGreenCounter(TeamGreenCounter + 1)
+                    Vibration.vibrate(50)
                 }
                 break;
             case 'Down':
                 if (TeamGreenCounter >= 1) {
                     setTeamGreenCounter(TeamGreenCounter - 1)
+                    Vibration.vibrate(50)
                 }
                 break;
         }
@@ -212,9 +217,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    if (orientationIsLandscape) {
-        
     },
     placarEdit: {
         flexDirection: 'row',

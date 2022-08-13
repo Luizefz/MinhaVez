@@ -1,29 +1,11 @@
 import { ScrollView, StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { Component, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useIsFocused } from "@react-navigation/native";
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenOrientation from 'expo-screen-orientation';
 
 export default function Header() {
 
     const navigation = useNavigation();
-
-    const [orientationIsLandscape,setOrientation]=useState(true)
-
-    const toggleOrientation = () => {
-        setOrientation(!orientationIsLandscape)
-        changeScreenOrientation()
-      }
-
-    async function changeScreenOrientation() {
-
-        if( orientationIsLandscape == true ){
-            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-            
-        }
-        if( orientationIsLandscape == false ){
-            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-        }
-    }
 
     return (
         <View style={styles.header}>

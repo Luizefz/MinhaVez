@@ -1,5 +1,7 @@
 import { ScrollView, StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useIsFocused } from "@react-navigation/native";
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import Placar from '../components/Placar';
@@ -10,6 +12,29 @@ import Jogos from '../components/Jogos';
 const Home = () => {
 
     const navigation = useNavigation();
+
+    const isVisible = useIsFocused();
+
+    async function changeScreenOrientation(turn) {
+
+        if (turn == true) {
+            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+
+        }
+        if (turn == false) {
+            await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+        }
+    }
+
+    useEffect(() => {
+
+        if (isVisible) {
+            setTimeout(() => {
+                changeScreenOrientation(false)
+            }, 100);
+        }
+
+    }, [isVisible])
 
     return (
         <SafeAreaView style={styles.container}>
